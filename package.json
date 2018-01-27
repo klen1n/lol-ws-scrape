@@ -1,0 +1,25 @@
+{
+  "name": "data-grabber",
+  "version": "1.0.0",
+  "description": "Data grabber from lolesports live",
+  "main": "grab.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.8.1",
+    "csv-stringify": "^1.0.4",
+    "express": "^4.13.4",
+    "file-exists": "^1.0.0",
+    "forever": "^0.15.1",
+    "lodash": "^4.12.0",
+    "moment": "^2.13.0",
+    "request": "^2.72.0",
+    "ws": "^1.1.0"
+  },
+  "scripts": {
+    "start": "forever start --uid=lol-data-grabber -l $PWD/logs/forever.log -o $PWD/logs/out.log -e $PWD/logs/err.log --append index.js",
+    "deploy": "cd .. && rsync -a --omit-dir-times --no-perms --exclude node_modules --exclude .git lol-ws-scrape/ demo@roadtolarissa.com:lol-ws-scrape/",
+    "view-logs": "bunyan logs/out.log"
+  }
+}
