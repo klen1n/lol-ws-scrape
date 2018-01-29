@@ -20,7 +20,7 @@
   "scripts": {
     "start": "forever start --uid=lol-data-grabber -l $PWD/logs/forever.log -o $PWD/logs/out.log -e $PWD/logs/err.log --append index.js",
     "deploy": "cd .. && rsync -a --omit-dir-times --no-perms --exclude node_modules --exclude .git lol-ws-scrape/ demo@roadtolarissa.com:lol-ws-scrape/",
-    "sync": "cd rsync -a --omit-dir-times --no-perms demo@roadtolarissa.com:lol-ws-scrape/ remote-games/",
+    "sync": "rsync -a --omit-dir-times --no-perms demo@roadtolarissa.com:lol-ws-scrape/games/ remote-games/",
     "view-logs": "bunyan logs/out.log"
   }
 }
