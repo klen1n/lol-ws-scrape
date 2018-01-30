@@ -9,10 +9,13 @@ d3.loadData('/../../remote-games/TRLH1-1002440271.json', (err, res) => {
   c = d3.conventions({
     sel: d3.select('#graph').html('').append('div'),
     layers: 'dcs',
+    width: 500,
+    height: 500
   })
 
 
-  p1 = data.map(d => d.playerStats[2])
+  p2 = data.map(d => d.playerStats[2])
+  p7 = data.map(d => d.playerStats[7])
 
   var {x, y, layers: [divSel, ctx, svg]} = c
 
@@ -23,10 +26,12 @@ d3.loadData('/../../remote-games/TRLH1-1002440271.json', (err, res) => {
   var line = d3.line().x(d => x(d.x)).y(d => y(d.y))
 
 
-  svg.append('path').at({d: line(p1), fill: 'none', stroke: '#000'})
+  svg.append('path').at({d: line(p2), fill: 'none', stroke: '#000'})
 
-  line.context(ctx)(p1)
-  ctx.stroke()
+  svg.append('path').at({d: line(p7), fill: 'none', stroke: '#f0f'})
+
+  // line.context(ctx)(p1)
+  // ctx.stroke()
 
 
 })
