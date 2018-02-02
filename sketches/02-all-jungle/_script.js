@@ -67,22 +67,53 @@ function drawGame(game){
     ctx.stroke()
   }
 
-  drawPathHealth(game.p2)
-  drawPathHealth(game.p7)
-
-  function drawPathHealth(path){
-    var color = d3.scaleLinear().range(['red', 'green'])
-
+  // drawPathHealth(game.p2, 'rgba(255,0,255,1)')
+  // drawPathHealth(game.p7, 'rgba(0,0,0,1)')
+  function drawPathHealth(path, color){
+    var colorScale = d3.scaleLinear()
+      .domain([0, .5, 1])
+      .range(['red', 'orange', 'green'])
+    
     path.forEach(d => {
       ctx.beginPath()
       ctx.moveTo(c.x(d.p.x), c.y(d.p.y))
       ctx.lineTo(c.x(d.x),   c.y(d.y))
-      ctx.strokeStyle = color(d.percentHealth)
-      ctx.lineWidth = 2
+      ctx.strokeStyle = colorScale(d.percentHealth)
+      ctx.lineWidth = d.percentHealth*3 + .1
       ctx.stroke()
     })
+  }
 
-    window.ctx = ctx
+  // drawPathWidth(game.p2, 'rgba(255,0,255,1)')
+  // drawPathWidth(game.p7, 'rgba(0,0,0,1)')
+  function drawPathWidth(path, color){
+    path.forEach(d => {
+      ctx.beginPath()
+      ctx.moveTo(c.x(d.p.x), c.y(d.p.y))
+      ctx.lineTo(c.x(d.x),   c.y(d.y))
+      ctx.strokeStyle = color
+      ctx.lineWidth = d.percentHealth*3 + .1
+      ctx.stroke()
+    })
+  }
+
+  drawPathTime(game.p2, 'rgba(255,0,255,1)')
+  drawPathTime(game.p7, 'rgba(0,0,0,1)')
+  function drawPathTime(path, color){
+    var colorScale = d3.scaleLinear()
+      .domain([0, .5, 1])
+      .range(['red', 'orange', 'green'])
+
+    path.forEach((d, i) => {
+      ctx.beginPath()
+      ctx.moveTo(c.x(d.p.x), c.y(d.p.y))
+      ctx.lineTo(c.x(d.x),   c.y(d.y))
+      ctx.strokeStyle = color
+      ctx.strokeStyle = colorScale(d.percentHealth)
+      
+      ctx.lineWidth = .2 + i/100
+      ctx.stroke()
+    })
   }
 
 
