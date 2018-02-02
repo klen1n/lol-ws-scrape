@@ -22,7 +22,8 @@ d3.loadData('jungle-routes.json', (err, res) => {
       })
 
       outPath.forEach((d, i) => {
-        d.p = i ? outPath[i - 1] : i
+        d.p = i ? outPath[i - 1] : d
+        d.i = i
 
         d.percentHealth = d.h/d.maxHealth        
       })
@@ -33,8 +34,14 @@ d3.loadData('jungle-routes.json', (err, res) => {
 
   gameSel = d3.select('#graph').html('')
     .appendMany('div', games)
-    .st({height: 250, width: 250, display: 'inline-block'})
+    .st({height: 150, width: 150, display: 'inline-block'})
     .each(drawGame)
+
+
+  var jungleSel = d3.selectAll('.jungle')
+    .st({opacity: 0})
+    .transition().duration(0).delay(d => d.i*100)
+    .st({opacity: 1})
 })
 
 
@@ -97,12 +104,12 @@ function drawGame(game){
     })
   }
 
-  drawPathTime(game.p2, 'rgba(255,0,255,1)')
-  drawPathTime(game.p7, 'rgba(0,0,0,1)')
+  // drawPathTime(game.p2, 'steelblue')
+  // drawPathTime(game.p7, 'green')
   function drawPathTime(path, color){
     var colorScale = d3.scaleLinear()
-      .domain([0, .5, 1])
-      .range(['red', 'orange', 'green'])
+      .domain([0, 1])
+      .range(['red', color])
 
     path.forEach((d, i) => {
       ctx.beginPath()
@@ -110,9 +117,31 @@ function drawGame(game){
       ctx.lineTo(c.x(d.x),   c.y(d.y))
       ctx.strokeStyle = color
       ctx.strokeStyle = colorScale(d.percentHealth)
-      
-      ctx.lineWidth = .2 + i/100
+
+      ctx.lineWidth = .5 + i/100
       ctx.stroke()
+    })
+  }
+
+  drawPathTimeSVG(game.p2, 'steelblue')
+  drawPathTimeSVG(game.p7, 'green')
+  function drawPathTimeSVG(path, color){
+    var colorScale = d3.scaleLinear()
+      .domain([0, 1])
+      .range(['red', color])
+
+    path.forEach((d, i) => {
+      c.svg.append('path.jungle')
+        .at({
+          d: [
+            'M', c.x(d.p.x), c.y(d.p.y),
+            'L', c.x(d.x),   c.y(d.y)
+          ].join(' '),
+          stroke: color,
+          stroke: colorScale(d.percentHealth),
+          strokeWidth: .5 + i/100
+        })
+        .datum(d)
     })
   }
 
