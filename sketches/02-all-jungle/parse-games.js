@@ -13,23 +13,22 @@ var games = glob.sync(__dirname + '/../../remote-games/*.json')
     }
     game = JSON.parse(str)
 
-    p2 = game.map(d => d.playerStats[2])
-    p7 = game.map(d => d.playerStats[7])
-
-    p2Meta = p2[0]
-    p7Meta = p7[0]
     var {gameId, generatedName, matchId, realm} = game
     var ticks = game.length
     var gameMeta = {gameId, generatedName, matchId, realm, ticks}
 
     var headers = 'x,y,h,maxHealth'
 
-    p2 = processPlayer(p2)
-    p7 = processPlayer(p7)
+    p2full = game.map(d => d.playerStats[2])
+    p7full = game.map(d => d.playerStats[7])
+
+    p2Meta = p2full[0]
+    p7Meta = p7full[0]
+
+    p2 = processPlayer(p2full)
+    p7 = processPlayer(p7full)
 
     function processPlayer(array){
-      array = array.map(d => ({x: d.x, y: d.y}))
-
       var firstBack = 0
       array.forEach((d, i)=> {
         d.p = i ? array[i - 1] : d
@@ -46,11 +45,15 @@ var games = glob.sync(__dirname + '/../../remote-games/*.json')
 
       console.log(firstBack, array.length)
 
-      array = array.filter((d, i) => i < firstBack)
+      var cols = headers.split(',')
+
       return array
-        .map(d => headers.split(',').map(str => d[str]).join(','))
+        .filter((d, i) => i < firstBack)
+        .map(d => cols.map(str => d[str]).join(','))
         .join(' ')
     }
+
+    // console.log(p2)
 
 
     return {p2, p7, headers, gameMeta, p2Meta, p7Meta}

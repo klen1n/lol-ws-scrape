@@ -14,12 +14,20 @@ d3.loadData('jungle-routes.json', (err, res) => {
     game.p7 = parsePath(game.p7)
 
     function parsePath(p){
-      return p.split(' ').map(str => {
+      var outPath = p.split(' ').map(str => {
         var rv = {}
         str.split(',').forEach((d, i) => rv[headers[i]] = d)
 
         return rv
       })
+
+      outPath.forEach((d, i) => {
+        d.p = i ? outPath[i - 1] : i
+
+        d.percentHealth = d.h/d.maxHealth        
+      })
+
+      return outPath
     }
   })
 
@@ -39,23 +47,44 @@ function drawGame(game){
 
   var {x, y, layers: [divSel, ctx, svg]} = c
 
-  var c = 200
-  x.domain([0 + c, 15000 - c])
-  y.domain([0 + c, 15000 - c])
+  var o = 200
+  x.domain([0 + o, 15000 - o])
+  y.domain([0 + o, 15000 - o])
 
-  var line = d3.line()
-    .x(d => x(d.x))
-    .y(d => y(d.y))
+  // drawPathMono()
+  function drawPathMono(){
+    var line = d3.line()
+      .x(d => x(d.x))
+      .y(d => y(d.y))
 
+    ctx.strokeStyle = '#000'
+    line.context(ctx)(game.p2)
+    ctx.stroke()
 
-  ctx.strokeStyle = '#000'
-  line.context(ctx)(game.p2)
-  ctx.stroke()
+    ctx.strokeStyle = '#f0f'
+    ctx.beginPath()
+    line.context(ctx)(game.p7)
+    ctx.stroke()
+  }
 
-  ctx.strokeStyle = '#f0f'
-  ctx.beginPath()
-  line.context(ctx)(game.p7)
-  ctx.stroke()
+  drawPathHealth(game.p2)
+  drawPathHealth(game.p7)
+
+  function drawPathHealth(path){
+    var color = d3.scaleLinear().range(['red', 'green'])
+
+    path.forEach(d => {
+      ctx.beginPath()
+      ctx.moveTo(c.x(d.p.x), c.y(d.p.y))
+      ctx.lineTo(c.x(d.x),   c.y(d.y))
+      ctx.strokeStyle = color(d.percentHealth)
+      ctx.lineWidth = 2
+      ctx.stroke()
+    })
+
+    window.ctx = ctx
+  }
+
 
 }
 
