@@ -18,15 +18,20 @@ scrape game logs
 
 - 
 
-
-### stop watch use
-
-show a timeline of stopwatch activations
+### differences in cs by position over time
 
 
 ### gold earned v value of items
 
 stacked area chart
+
+
+### health of every player over time
+
+
+### stop watch use
+
+show a timeline of stopwatch activations
 
 
 ### direction moved each frame

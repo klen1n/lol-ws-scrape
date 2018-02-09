@@ -63,9 +63,9 @@ d3.loadData('/../../remote-games/TRLH1-1002440271.json', (err, res) => {
   line.context(ctx)(p7)
   ctx.stroke()
 
-  svg.append('circle')
-    .translate([c.x(394), c.y(461)])
-    .at({r: c.x(4000), fill: 'none', stroke: '#0f0'})
+  // svg.append('circle')
+  //   .translate([c.x(394), c.y(461)])
+  //   .at({r: c.x(4000), fill: 'none', stroke: '#0f0'})
 
 
 })
