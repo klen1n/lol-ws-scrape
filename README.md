@@ -46,6 +46,8 @@ do some players more left and right more?
 
 ## Player tick data
 
+https://github.com/remixz/lol-game-analysis/blob/92b745b22e83726abfef46a9c29fbbaae9e710bc/src/components/PlayerTable/index.js
+
 abilityPower: 0
 armor: 31
 armorPen: 0
@@ -54,7 +56,7 @@ assists: 0
 attackDamage: 77
 attackSpeed: 100
 ccReduction: 0
-cg: 0
+cg: 0 // current gold
 championId: 81
 championName: "Ezreal"
 deaths: 0
@@ -71,14 +73,14 @@ magicResist: 30
 masteries: []
 maxHealth: 559
 maxPower: 360
-md: 0
+md: 0 // Magic Damage
 mdc: 0
-mk: 0
+mk: 0 // Minions Killed
 movementSpeed: 676
 p: 360
 participantId: 4
-pd: 0
-pdc: 0
+pd: 0 // Physical Damage Dealt
+pdc: 0 // Physical Damage Dealt Champs
 pentaKills: 0
 playerId: "1375"
 powerRegen: 16
@@ -91,12 +93,12 @@ spellVamp: 0
 summonerName: "GGS Deftly"
 summonersSpell1: 4
 summonersSpell2: 7
-td: 0
-tdc: 0
+td: 0  // Total Damage Dealt
+tdc: 0 // Total Damage to Champions
 teamId: 100
-tg: 500
-trd: 0
-trdc: 0
+tg: 500  // Total Gold
+trd: 0  // True Damage Dealt
+trdc: 0 // True Damage to Champions
 tripleKills: 0
 wardsKilled: 0
 wardsPlaced: 0
