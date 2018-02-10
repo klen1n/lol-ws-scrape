@@ -27,7 +27,7 @@ d3.loadData('games.json', (err, res) => {
         // d.p = i ? outPath[i - 1] : d
         d.i = i
 
-        d.time = i*10 + 10
+        d.time = i*5 + 10
         d.percentHealth = d.h/d.maxHealth        
       })
 

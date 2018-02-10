@@ -29,17 +29,19 @@ var games = glob.sync(__dirname + '/../../remote-games/*.json')
       return {ticks: processPlayer(full), meta}
     })
 
+    var secPerTick = 5
+
     function processPlayer(array){
       var cols = headers.split(',')
 
       return array
-        .filter((d, i) => i % 10 == 0)
+        .filter((d, i) => i % 5 == 0)
         .map(d => cols.map(str => d[str]).join(','))
         .join(' ')
     }
 
 
-    return {players, headers, gameMeta}
+    return {players, headers, gameMeta, secPerTick}
   })
 
 
