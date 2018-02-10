@@ -2,7 +2,7 @@ console.clear()
 d3.select('body').selectAppend('div.tooltip')
 
 // mk tg cg tdc h maxHealth
-
+var isTotalGold = false
 d3.loadData('../04-champ-dmg/games.json', (err, res) => {
   games = res[0]
 
@@ -41,7 +41,8 @@ d3.loadData('../04-champ-dmg/games.json', (err, res) => {
     .st({height: 200, width: 300, display: 'inline-block'})
     .each(drawGame)
 
-  update()
+  if (window.goldInterval) window.goldInterval.stop()
+  window.goldInterval = d3.interval(update, 2000)
 
 
 })
@@ -80,6 +81,11 @@ function drawGame(game){
       .offset(d3.stackOffsetDiverging)
   seriesTotal = stackTotal(game.ticks)
 
+  var temp = seriesTotal[0]
+  seriesTotal[0] = seriesTotal[1]
+  seriesTotal[1] = temp
+  // console.log(temp)
+
   var stackPercent = d3.stack()
       .keys([4, 5, 6, 7])
       .order(d3.stackOrderNone)
@@ -111,7 +117,9 @@ function drawGame(game){
     .tickValues(d3.range(0, 60*70, 60*10))
 
   c.yAxis.ticks(5)
+    .tickValues([])
     .tickFormat(d3.format('.0%'))
+
 
   d3.drawAxis(c)
 
@@ -120,7 +128,7 @@ function drawGame(game){
     .y0(d => c.y(d[0]))
     .y1(d => c.y(d[1]))
 
-  svg.appendMany('path.area', seriesPercent)
+  game.pathSel = svg.appendMany('path.area', seriesPercent)
     .at({
       d: area,
       fill: (d, i) => i < 2 ? 'rgb(33, 150, 243)' : 'rgb(244, 67, 54)',
@@ -137,13 +145,19 @@ function drawGame(game){
 }
 
 
-function update(isTotal){
-  isTotal = true
+function update(){
+  isTotalGold = !isTotalGold
 
-  games.forEach(({c, area, seriesTotal, seriesPercent}) => {
-    c.y.domain([-80000, 80000])
+  games.forEach(({c, pathSel, area, seriesTotal, seriesPercent}) => {
+    if (isTotalGold){
+      c.y.domain([-80000, 80000])
+      pathSel.data(seriesTotal)
+    } else{
+      c.y.domain([0, 1])
+      pathSel.data(seriesPercent)
+    }
 
-    c.svg.selectAll('path.area').data(seriesTotal)
+    pathSel
       .transition().duration(1000)
       .at({d: area})
   })

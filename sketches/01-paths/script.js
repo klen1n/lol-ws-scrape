@@ -2,8 +2,8 @@ console.clear()
 d3.select('body').selectAppend('div.tooltip')
 
 
-//TRLH3-1002350252.json
-d3.loadData('/../../remote-games/TRLH1-1002440271.json', (err, res) => {
+///../../remote-games/TRLH1-1002440271.json
+d3.loadData('TRLH1-1002440210', (err, res) => {
   data = res[0]
 
   c = d3.conventions({

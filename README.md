@@ -1,3 +1,10 @@
+https://1wheel.github.io/lol-ws-scrape/sketches/01-paths/
+https://1wheel.github.io/lol-ws-scrape/sketches/02-all-jungle/
+https://1wheel.github.io/lol-ws-scrape/sketches/03-invade-routes/
+https://1wheel.github.io/lol-ws-scrape/sketches/04-champ-dmg/
+https://1wheel.github.io/lol-ws-scrape/sketches/05-gold-dif/
+https://1wheel.github.io/lol-ws-scrape/sketches/06-health-timeline/
+
 scraping code from https://github.com/remixz/lol-game-analysis/tree/master/data-grabber
 
 ```bash
