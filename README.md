@@ -4,6 +4,7 @@ https://1wheel.github.io/lol-ws-scrape/sketches/03-invade-routes/
 https://1wheel.github.io/lol-ws-scrape/sketches/04-champ-dmg/
 https://1wheel.github.io/lol-ws-scrape/sketches/05-gold-dif/
 https://1wheel.github.io/lol-ws-scrape/sketches/06-health-timeline/
+https://1wheel.github.io/lol-ws-scrape/sketches/07-cs-dif/
 
 scraping code from https://github.com/remixz/lol-game-analysis/tree/master/data-grabber
 
