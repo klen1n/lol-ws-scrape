@@ -19,9 +19,10 @@
     "ws": "^1.1.0"
   },
   "scripts": {
-    "start": "forever start --uid=lol-data-grabber -l $PWD/logs/forever.log -o $PWD/logs/out.log -e $PWD/logs/err.log --append index.js",
+    "start-forever": "forever start --uid=lol-data-grabber -l $PWD/logs/forever.log -o $PWD/logs/out.log -e $PWD/logs/err.log --append index.js",
     "deploy": "cd .. && rsync -a --omit-dir-times --no-perms --exclude node_modules --exclude games --exclude .git --exclude remote-games lol-ws-scrape/ demo@roadtolarissa.com:lol-ws-scrape/",
     "sync": "rsync -a --omit-dir-times --no-perms demo@roadtolarissa.com:lol-ws-scrape/games/ remote-games/",
-    "view-logs": "bunyan logs/out.log"
+    "start": "pm2 start -n lol-ws-scrape index.js",
+    "reload": "pm2 reload lol-ws-scrape"
   }
 }
