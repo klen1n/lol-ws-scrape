@@ -30,6 +30,7 @@ function connectToSocket () {
 
     let ws = new WebSocket(`ws://livestats.proxy.lolesports.com/stats?jwt=${body.token}`)
     // let ws = new WebSocket(`ws://localhost:8080`) // used for simulation of livestats server
+    let lastPong = 0
 
     ws.on('close', (code, message) => {
       log.warn('websocket has closed. info:')
@@ -39,9 +40,24 @@ function connectToSocket () {
       connectToSocket()
     })
 
+    ws.on('ping', function heartbeat() {
+      log.info("ping")
+      this.ping()
+      this.pingTimeout = setTimeout(() => {
+        this.terminate();
+      }, 10000 + 1000);
+    })
+
+    ws.on('pong', function heartbeat2() {
+      clearTimeout(this.pingTimeout);
+      log.info('Pong received');
+      lastPong = process.hrtime()[0]
+    })
+
     ws.on('error', (err) => {
       log.error('error reported:')
       log.error(err)
+      connectToSocket()
     })
 
     ws.on('message', (msg) => {
@@ -127,6 +143,17 @@ function connectToSocket () {
         }
       })
     })
+
+    async function checkConnection() {
+      this.pingTimeout = setTimeout(() => {
+        log.info("check connection")
+        if (lastPong && process.hrtime()[0] - lastPong > 100) {
+          ws.terminate()
+        }
+        checkConnection()
+      }, 30000 + 1000);
+    }
+    checkConnection()
   })
 }
 

@@ -16,7 +16,7 @@
     "moment": "^2.13.0",
     "request": "^2.72.0",
     "scrape-stl": "^1.0.3",
-    "ws": "^1.1.0"
+    "ws": "^6.1.4"
   },
   "scripts": {
     "start-forever": "forever start --uid=lol-data-grabber -l $PWD/logs/forever.log -o $PWD/logs/out.log -e $PWD/logs/err.log --append index.js",
